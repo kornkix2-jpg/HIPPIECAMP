@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#171310">
+    <title>HIPPIE CAMP | Lounge POS</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg: #11100f;
+            --panel: #1c1916;
+            --panel2: #24201b;
+            --line: #373027;
+            --gold: #d7aa63;
+            --gold2: #f0ce91;
+            --text: #f4eee4;
+            --muted: #a89e90;
+            --green: #8fc49d;
+            --red: #e98c76;
+            --shadow: 0 18px 60px #0008
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: radial-gradient(ellipse at 82% -15%, #50371f66, transparent 38%), var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', 'Noto Sans Thai', sans-serif;
+            font-size: 14px
+        }
+
+        button,
+        input,
+        select {
+            font: inherit
+        }
+
+        button {
+            cursor: pointer;
+            color: inherit
+        }
+
+        .app {
+            min-height: 100vh
+        }
+
+        .top {
+            height: 76px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            background: #171411eF;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            backdrop-filter: blur(16px)
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #dfb46d, #8e5f31);
+            display: grid;
+            place-items: center;
+            color: #21170d;
+            font-size: 22px
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 17px;
+            letter-spacing: 2px
+        }
+
+        .brand small {
+            display: block;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 2.2px;
+            margin-top: 2px
+        }
+
+        .topright {
+            display: flex;
+            align-items: center;
+            gap: 16px
+        }
+
+        .live {
+            color: var(--green);
+            font-size: 12px
+        }
+
+        .userpill {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 7px 12px;
+            background: var(--panel2);
+            border: 1px solid var(--line);
+            border-radius: 12px
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: #725331;
+            color: #ffe1a8;
+            font-weight: 700
+        }
+
+        .userpill small {
+            display: block;
+            color: var(--muted);
+            font-size: 10px
+        }
+
+        .logout {
+            border: 0;
+            background: none;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            min-height: calc(100vh - 76px)
+        }
+
+        .side {
+            border-right: 1px solid var(--line);
+            padding: 22px 14px;
+            background: #151310
+        }
+
+        .side-label {
+            font-size: 10px;
+            color: #83796b;
+            letter-spacing: 1.5px;
+            padding: 4px 12px 12px
+        }
+
+        .nav {
+            width: 100%;
+            text-align: left;
+            padding: 12px;
+            border: 0;
+            background: none;
+            color: #b7ad9f;
+            border-radius: 11px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .nav:hover,
+        .nav.active {
+            background: #35291c;
+            color: var(--gold2)
+        }
+
+        .nav .ico {
+            width: 20px;
+            text-align: center
+        }
+
+        .nav.active {
+            box-shadow: inset 2px 0 var(--gold)
+        }
+
+        .side-foot {
+            position: sticky;
+            top: 90vh;
+            border-top: 1px solid var(--line);
+            margin-top: 28px;
+            padding: 16px 10px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.7
+        }
+
+        .main {
+            padding: 28px;
+            max-width: 1560px;
+            width: 100%;
+            margin: auto
+        }
+
+        .heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 24px
+        }
+
+        .eyebrow {
+            color: var(--gold);
+            letter-spacing: 1.8px;
+            font-size: 10px;
+            text-transform: uppercase
+        }
+
+        .heading h2 {
+            font-size: 25px;
+            margin: 5px 0 3px
+        }
+
+        .heading p {
+            margin: 0;
+            color: var(--muted)
+        }
+
+        .btn {
+            border: 1px solid #705632;
+            background: linear-gradient(135deg, #c89952, #a87132);
+            color: #20170d;
+            font-weight: 700;
+            padding: 11px 16px;
+            border-radius: 10px
+        }
+
+        .btn:hover {
+            filter: brightness(1.1)
+        }
+
+        .btn.secondary {
+            background: #28231e;
+            border-color: var(--line);
+            color: var(--text)
+        }
+
+        .btn.danger {
+            background: #4a2822;
+            border-color: #75463b;
+            color: #ffc8b9
+        }
+
+        .btn.small {
+            padding: 7px 10px;
+            font-size: 12px
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 20px
+        }
+
+        .card,
+        .box {
+            border: 1px solid var(--line);
+            background: linear-gradient(145deg, #211d18, #191715);
+            border-radius: 15px;
+            padding: 18px;
+            box-shadow: 0 6px 18px #0002
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .metric .mi {
+            background: #493721;
+            border-radius: 10px;
+            padding: 8px;
+            color: var(--gold2)
+        }
+
+        .value {
+            font-size: 25px;
+            font-weight: 700;
+            margin: 10px 0 4px
+        }
+
+        .hint {
+            font-size: 11px;
+            color: var(--muted)
+        }
+
+        .green {
+            color: var(--green)
+        }
+
+        .red {
+            color: var(--red)
+        }
+
+        .grid2 {
+            display: grid;
+            grid-template-columns: 1.45fr 1fr;
+            gap: 16px
+        }
+
+        .box {
+            padding: 20px;
+            margin-bottom: 16px
+        }
+
+        .boxhead {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 17px
+        }
+
+        .boxhead h3 {
+            margin: 0;
+            font-size: 15px
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        .table-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(110px, 1fr));
+            gap: 12px
+        }
+
+        .table-card {
+            background: #211e19;
+            border: 1px solid var(--line);
+            border-radius: 13px;
+            text-align: left;
+            padding: 14px;
+            min-height: 112px;
+            transition: .15s
+        }
+
+        .table-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-2px)
+        }
+
+        .table-card.selected {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px #d7aa6330
+        }
+
+        .table-card.busy {
+            border-color: #8f6535;
+            background: #2b2218
+        }
+
+        .table-card.bill {
+            border-color: #714b40;
+            background: #2b1e1a
+        }
+
+        .table-no {
+            font-size: 20px;
+            font-weight: 700
+        }
+
+        .table-state {
+            font-size: 11px;
+            margin-top: 12px;
+            color: var(--green)
+        }
+
+        .busy .table-state {
+            color: var(--gold2)
+        }
+
+        .bill .table-state {
+            color: #f2a18c
+        }
+
+        .table-amount {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 3px
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .between {
+            justify-content: space-between
+        }
+
+        .pills {
+            display: flex;
+            gap: 8px;
+            overflow: auto;
+            padding-bottom: 3px
+        }
+
+        .pill {
+            white-space: nowrap;
+            background: #24201b;
+            border: 1px solid var(--line);
+            padding: 8px 12px;
+            border-radius: 999px;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .pill.active {
+            background: #4a3821;
+            color: var(--gold2);
+            border-color: #805f34
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 11px
+        }
+
+        .product {
+            border: 1px solid var(--line);
+            background: #211e19;
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+            text-align: left
+        }
+
+        .product:hover {
+            border-color: #b88b4b
+        }
+
+        .pemoji {
+            font-size: 21px
+        }
+
+        .pname {
+            font-weight: 600;
+            margin: 8px 0 3px
+        }
+
+        .pmeta {
+            font-size: 10px;
+            color: var(--muted)
+        }
+
+        .price {
+            color: var(--gold2);
+            font-weight: 700;
+            margin-top: 8px
+        }
+
+        .sell-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.5fr) minmax(300px, .8fr);
+            gap: 16px
+        }
+
+        .cart {
+            position: sticky;
+            top: 94px;
+            align-self: start
+        }
+
+        .cart-line {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .qty {
+            display: flex;
+            align-items: center;
+            gap: 7px
+        }
+
+        .qty button {
+            width: 25px;
+            height: 25px;
+            border: 1px solid var(--line);
+            background: #29241e;
+            border-radius: 7px
+        }
+
+        .totalrow {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            color: var(--muted)
+        }
+
+        .totalrow.grand {
+            font-size: 17px;
+            color: var(--text);
+            font-weight: 700;
+            border-top: 1px solid var(--line);
+            margin-top: 6px;
+            padding-top: 14px
+        }
+
+        .input,
+        select {
+            background: #171513;
+            border: 1px solid var(--line);
+            color: var(--text);
+            padding: 10px 12px;
+            border-radius: 9px;
+            outline: none
+        }
+
+        .input:focus,
+        select:focus {
+            border-color: var(--gold)
+        }
+
+        .full {
+            width: 100%
+        }
+
+        .formrow {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .formrow>* {
+            flex: 1;
+            min-width: 150px
+        }
+
+        .badge {
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 20px;
+            background: #4a3821;
+            color: var(--gold2)
+        }
+
+        .badge.green {
+            background: #253a2b;
+            color: #a9ddb3
+        }
+
+        .badge.red {
+            background: #442920;
+            color: #f5aa91
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        .table th {
+            text-align: left;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 500;
+            padding: 10px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #302a23;
+            font-size: 12px
+        }
+
+        .table tr:last-child td {
+            border: 0
+        }
+
+        .barrow {
+            display: grid;
+            grid-template-columns: 55px 1fr 90px;
+            gap: 12px;
+            align-items: center;
+            margin: 15px 0;
+            font-size: 11px
+        }
+
+        .barbg {
+            height: 8px;
+            background: #332d25;
+            border-radius: 9px;
+            overflow: hidden
+        }
+
+        .bar {
+            height: 100%;
+            background: linear-gradient(90deg, #a16f37, #e3bc77);
+            border-radius: 9px
+        }
+
+        .alert {
+            padding: 11px 12px;
+            border: 1px solid #685039;
+            background: #2c241b;
+            border-radius: 10px;
+            margin: 8px 0;
+            font-size: 12px
+        }
+
+        .notice {
+            color: var(--muted);
+            font-size: 12px;
+            padding: 16px;
+            text-align: center
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            background: #2e261b;
+            border: 1px solid #86663a;
+            padding: 13px 18px;
+            border-radius: 11px;
+            box-shadow: var(--shadow);
+            z-index: 12;
+            animation: fade 2.6s forwards
+        }
+
+        .login {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.08fr .92fr;
+            background: radial-gradient(ellipse at 15% 40%, #593d2080, transparent 55%), #12100e
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 9vw
+        }
+
+        .hero .brand {
+            margin-bottom: 42px
+        }
+
+        .hero h2 {
+            font-size: clamp(40px, 6vw, 72px);
+            line-height: 1.05;
+            margin: 0 0 20px;
+            letter-spacing: -2px
+        }
+
+        .hero h2 span {
+            color: var(--gold2)
+        }
+
+        .hero p {
+            color: #c0b3a2;
+            max-width: 470px;
+            line-height: 1.9
+        }
+
+        .hero-foot {
+            position: absolute;
+            bottom: 28px;
+            color: #807568;
+            font-size: 11px
+        }
+
+        .login-side {
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background: #191613cc;
+            border-left: 1px solid var(--line)
+        }
+
+        .login-card {
+            width: min(420px, 100%);
+            padding: 32px;
+            border: 1px solid var(--line);
+            background: #201c18;
+            border-radius: 20px;
+            box-shadow: var(--shadow)
+        }
+
+        .login-card h3 {
+            font-size: 24px;
+            margin: 6px 0
+        }
+
+        .login-card p {
+            color: var(--muted);
+            font-size: 13px;
+            margin: 0 0 24px
+        }
+
+        .role-switch {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 4px;
+            border-radius: 11px;
+            background: #151310;
+            margin-bottom: 20px
+        }
+
+        .role-switch button {
+            border: 0;
+            border-radius: 8px;
+            padding: 10px;
+            background: transparent;
+            color: var(--muted)
+        }
+
+        .role-switch button.active {
+            background: #49361f;
+            color: #f4d69e
+        }
+
+        .field {
+            margin: 14px 0
+        }
+
+        .field label {
+            display: block;
+            font-size: 11px;
+            color: #beb3a4;
+            margin-bottom: 7px
+        }
+
+        .login-hint {
+            margin-top: 18px;
+            padding: 12px;
+            background: #2a251f;
+            border-radius: 9px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.8
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .mobile-nav {
+            display: none
+        }
+
+        .report-filter {
+            display: flex;
+            gap: 8px
+        }
+
+        .empty {
+            padding: 25px;
+            text-align: center;
+            color: var(--muted)
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0;
+                transform: translateY(8px)
+            }
+
+            10%,
+            80% {
+                opacity: 1;
+                transform: none
+            }
+
+            100% {
+                opacity: 0
+            }
+        }
+
+        @media(max-width:1000px) {
+            .layout {
+                grid-template-columns: 70px 1fr
+            }
+
+            .side {
+                padding: 18px 9px
+            }
+
+            .side-label,
+            .nav span:not(.ico),
+            .side-foot {
+                display: none
+            }
+
+            .nav {
+                justify-content: center;
+                padding: 13px
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .grid2 {
+                grid-template-columns: 1fr
+            }
+
+            .sell-layout {
+                grid-template-columns: 1fr
+            }
+
+            .cart {
+                position: static
+            }
+
+            .table-grid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+        }
+
+        @media(max-width:650px) {
+            .top {
+                height: 64px;
+                padding: 0 14px
+            }
+
+            .brand h1 {
+                font-size: 14px
+            }
+
+            .brand small {
+                font-size: 8px
+            }
+
+            .live {
+                display: none
+            }
+
+            .layout {
+                display: block;
+                padding-bottom: 68px
+            }
+
+            .side {
+                display: none
+            }
+
+            .main {
+                padding: 19px 14px
+            }
+
+            .heading {
+                align-items: flex-start;
+                gap: 12px
+            }
+
+            .heading h2 {
+                font-size: 21px
+            }
+
+            .heading .btn {
+                padding: 9px 10px;
+                font-size: 11px
+            }
+
+            .cards {
+                gap: 9px
+            }
+
+            .card {
+                padding: 13px
+            }
+
+            .value {
+                font-size: 20px
+            }
+
+            .table-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .products {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .login {
+                grid-template-columns: 1fr
+            }
+
+            .hero {
+                display: none
+            }
+
+            .login-side {
+                border: 0;
+                min-height: 100vh
+            }
+
+            .userpill {
+                padding: 5px
+            }
+
+            .userpill div:last-child {
+                display: none
+            }
+
+            .mobile-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 8;
+                background: #191613;
+                border-top: 1px solid var(--line);
+                justify-content: space-around;
+                padding: 8px 4px max(8px, env(safe-area-inset-bottom))
+            }
+
+            .mobile-nav .nav {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                font-size: 9px;
+                padding: 6px 3px;
+                margin: 0;
+                width: auto
+            }
+
+            .mobile-nav .nav span:not(.ico) {
+                display: block
+            }
+
+            .table td,
+            .table th {
+                padding: 9px 6px
+            }
+
+            .report-filter {
+                flex-wrap: wrap
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        (() => {
+            'use strict';
+            /* ================= SUPABASE CONFIG ================= */
+            const SUPABASE_URL = window.HIPPIE_SUPABASE_URL || 'https://ubauuovwoslmsjhwpiuk.supabase.co';
+            const SUPABASE_ANON_KEY = window.HIPPIE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InViYXV1b3Z3b3NsbXNqaHdwaXVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MTY0NzQsImV4cCI6MjEwNjE5MjQ3NH0.HPtSnUi81aoSm9EYkkeXcTBeMPmi434pImUerp3Jhao';
+            const sb = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } });
+            const SUPABASE_READY = !!sb && !SUPABASE_URL.includes('YOUR-PROJECT') && !SUPABASE_ANON_KEY.includes('YOUR_SUPABASE');
+
+            const $ = s => document.querySelector(s),
+                money = n => '฿' + Number(n || 0).toLocaleString('th-TH', { minimumFractionDigits: 0, maximumFractionDigits: 2 }),
+                today = () => new Date().toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' }),
+                uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+
+            // ===== BUG-005 FIX: escape HTML ทุกครั้งที่เอาข้อมูลผู้ใช้มาแสดง =====
+            const esc = v => String(v ?? '').replace(/[&<>"'`=\/]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;', '=': '&#61;', '/': '&#47;' }[c]));
+
+            // ===== BUG-004 FIX: ตรวจสอบ username ให้เป็น a-z 0-9 _ . - เท่านั้น =====
+            const VALID_USERNAME = /^[a-z0-9_.-]{3,32}$/;
+            const isValidUsername = v => VALID_USERNAME.test(String(v || '').trim().toLowerCase());
+
+            const passwordHash = async value => { const data = new TextEncoder().encode(String(value)); const hash = await crypto.subtle.digest('SHA-256', data); return [...new Uint8Array(hash)].map(x => x.toString(16).padStart(2, '0')).join('') };
+
+            const initial = { users: [{ name: 'คุณนที', username: 'manager', password_hash: '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', role: 'owner', active: true }, { name: 'มินท์', username: 'staff', password_hash: '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', role: 'staff', active: true }, { name: 'บอส', username: 'boss', password_hash: '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', role: 'staff', active: true }], products: [{ id: 'p1', name: 'เบียร์สด', cat: 'เบียร์', price: 150, stock: 28, unit: 'แก้ว', emoji: '🍺', low: 8 }, { id: 'p2', name: 'ช้าง ขวดใหญ่', cat: 'เบียร์', price: 120, stock: 22, unit: 'ขวด', emoji: '🍻', low: 8 }, { id: 'p3', name: 'สิงห์ ขวดใหญ่', cat: 'เบียร์', price: 130, stock: 15, unit: 'ขวด', emoji: '🍺', low: 8 }, { id: 'p4', name: 'โซจู', cat: 'เหล้า', price: 250, stock: 14, unit: 'ขวด', emoji: '🍶', low: 5 }, { id: 'p5', name: 'เหล้าปั่น', cat: 'เหล้า', price: 180, stock: 17, unit: 'เหยือก', emoji: '🍹', low: 5 }, { id: 'p6', name: 'น้ำเปล่า', cat: 'เครื่องดื่ม', price: 25, stock: 45, unit: 'ขวด', emoji: '💧', low: 10 }, { id: 'p7', name: 'โค้ก', cat: 'เครื่องดื่ม', price: 35, stock: 32, unit: 'ขวด', emoji: '🥤', low: 8 }, { id: 'p8', name: 'เฟรนช์ฟรายส์', cat: 'อาหาร', price: 99, stock: 18, unit: 'จาน', emoji: '🍟', low: 5 }, { id: 'p9', name: 'ปีกไก่ทอด', cat: 'อาหาร', price: 159, stock: 12, unit: 'จาน', emoji: '🍗', low: 5 }, { id: 'p10', name: 'เอ็นไก่ทอด', cat: 'กับแกล้ม', price: 129, stock: 7, unit: 'จาน', emoji: '🍢', low: 5 }, { id: 'p11', name: 'ยำรวมมิตร', cat: 'กับแกล้ม', price: 179, stock: 9, unit: 'จาน', emoji: '🥗', low: 4 }, { id: 'p12', name: 'น้ำแข็งถัง', cat: 'เครื่องดื่ม', price: 40, stock: 26, unit: 'ถัง', emoji: '🧊', low: 6 }], tables: Array.from({ length: 16 }, (_, i) => ({ id: i + 1, area: i < 8 ? 'โซนสวน' : 'โซนแคมป์', state: 'free', order: [], started: null })), bills: [], logs: [], daily: [] };
+            let db;
+            try { db = JSON.parse(localStorage.getItem('hippieCampPOSv2')) || structuredClone(initial) } catch { db = structuredClone(initial) }
+            if (!db.tables || db.tables.length !== 16) db.tables = structuredClone(initial.tables);
+            if (!db.products) db.products = structuredClone(initial.products);
+            if (!db.users) db.users = structuredClone(initial.users);
+            db.users.forEach(u => { if (u.username === 'owner') u.username = 'manager' });
+            db.bills ||= []; db.logs ||= []; db.roundClosures ||= [];
+
+            const localKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            const serviceDay = (d = new Date()) => { let x = new Date(d); if (x.getHours() < 17) x.setDate(x.getDate() - 1); return localKey(x) };
+            db.serviceDate ||= serviceDay();
+            const autoRound = () => new Date().getHours() >= 17 ? 1 : 2;
+            db.systemOpen ??= true;
+            db.round ??= autoRound();
+            db.roundAuto ??= true;
+            if (db.serviceDate !== serviceDay()) { db.serviceDate = serviceDay(); db.systemOpen = true; db.round = autoRound(); db.roundAuto = true }
+
+            let user = null, page = 'login', tableId = null, category = 'ทั้งหมด', query = '', rolePick = 'staff';
+            let syncTimer = null, syncBusy = false, syncAgain = false, syncedLogCount = 0;
+            let supabaseWelcomeShown = false; // ===== BUG-001 FIX: แสดง toast "Supabase" ครั้งเดียว =====
+
+            const supaRows = () => ({
+                users: db.users.map(u => ({ username: u.username, name: u.name, password_hash: u.password_hash || '', role: u.role, active: !!u.active })),
+                products: db.products.map(p => ({ id: p.id, name: p.name, cat: p.cat, price: p.price, stock: p.stock, unit: p.unit, emoji: p.emoji, low: p.low })),
+                phase1: db.bills.filter(b => b.kind === 'order' || (!b.kind && b.stage !== 'ปิดยอด')).map(b => ({ id: b.id, table_no: b.table, staff: b.staff, time: b.time, total: b.total, items: b.items || [], round: b.round || null, service_date: b.serviceDate || null, stage: b.stage || null })),
+                phase2: db.bills.filter(b => b.kind === 'settlement' || (!b.kind && b.stage === 'ปิดยอด')).map(b => ({ id: b.id, table_no: b.table, staff: b.staff, time: b.time, total: b.total, items: b.items || [], round: b.round || null, service_date: b.serviceDate || null, stage: b.stage || 'ปิดยอด' })),
+                logs: db.logs.map(l => ({ user_name: l.user, action: l.action, time: l.time })),
+                daily: (db.roundClosures || []).map(x => ({ closure_key: `${x.serviceDate}-${x.round}-${x.closedAt}`, service_date: x.serviceDate, round_no: x.round, closed_at: x.closedAt, staff: x.staff, total: x.total, bill_count: x.billCount }))
+            });
+
+            const dedupe = (arr, key) => [...new Map(arr.map(x => [x[key], x])).values()];
+            const dedupeRows = r => ({ ...r, users: dedupe(r.users, 'username'), products: dedupe(r.products, 'id'), phase1: dedupe(r.phase1, 'id'), phase2: dedupe(r.phase2, 'id'), daily: dedupe(r.daily, 'closure_key') });
+
+            const syncNow = async () => {
+                if (!SUPABASE_READY || !sb || syncBusy) { if (syncBusy) syncAgain = true; return; }
+                syncBusy = true;
+                try {
+                    const r = dedupeRows(supaRows());
+                    const u = await sb.from('user_data_store').upsert(r.users, { onConflict: 'username' });
+                    if (u.error) throw u.error;
+                    const p = await sb.from('stock_data_store').upsert(r.products, { onConflict: 'id' });
+                    if (p.error) throw p.error;
+                    const p1 = await sb.from('phase_1_bill_data_store').upsert(r.phase1, { onConflict: 'id' });
+                    if (p1.error) throw p1.error;
+                    const p2 = await sb.from('phase_2_bill_data_store').upsert(r.phase2, { onConflict: 'id' });
+                    if (p2.error) throw p2.error;
+                    const pendingLogs = r.logs.slice(syncedLogCount);
+                    if (pendingLogs.length) {
+                        const lg = await sb.from('user_access_log_data_store').insert(pendingLogs);
+                        if (lg.error) throw lg.error;
+                        syncedLogCount = r.logs.length;
+                    }
+                    if (r.daily.length) {
+                        const ds = await sb.from('daily_sales_summary_data_store').upsert(r.daily, { onConflict: 'closure_key' });
+                        if (ds.error) throw ds.error;
+                    }
+                    localStorage.setItem('hippieCampPOSv2', JSON.stringify(db));
+                } catch (err) {
+                    console.error('Supabase sync failed', err);
+                    toast('เชื่อม Supabase ไม่สำเร็จ · ตรวจ URL/Key และ SQL');
+                } finally {
+                    syncBusy = false;
+                    if (syncAgain) { syncAgain = false; clearTimeout(syncTimer); syncTimer = setTimeout(syncNow, 200); }
+                }
+            };
+
+            const save = () => {
+                localStorage.setItem('hippieCampPOSv2', JSON.stringify(db));
+                clearTimeout(syncTimer);
+                syncTimer = setTimeout(syncNow, 80);
+            };
+
+            const loadFromSupabase = async () => {
+                if (!SUPABASE_READY || !sb) return false;
+                try {
+                    const [u, p, p1, p2, l, c] = await Promise.all([
+                        sb.from('user_data_store').select('*').order('username'),
+                        sb.from('stock_data_store').select('*').order('id'),
+                        sb.from('phase_1_bill_data_store').select('*').order('time'),
+                        sb.from('phase_2_bill_data_store').select('*').order('time'),
+                        sb.from('user_access_log_data_store').select('*').order('time'),
+                        sb.from('daily_sales_summary_data_store').select('*').order('closed_at')
+                    ]);
+                    for (const x of [u, p, p1, p2, l, c]) { if (x.error) throw x.error; }
+                    if (u.data?.length) {
+                        db.users = u.data.map(x => ({ name: x.name, username: x.username, password_hash: x.password_hash || '', role: x.role, active: x.active }));
+                    }
+                    if (p.data?.length) {
+                        db.products = p.data.map(x => ({ id: x.id, name: x.name, cat: x.cat, price: Number(x.price), stock: Number(x.stock), unit: x.unit, emoji: x.emoji, low: Number(x.low) }));
+                    }
+                    const phase1Bills = (p1.data || []).map(x => ({ id: x.id, table: x.table_no, staff: x.staff, time: x.time, total: Number(x.total), items: x.items || [], kind: 'order', round: x.round, serviceDate: x.service_date, stage: x.stage }));
+                    const phase2Bills = (p2.data || []).map(x => ({ id: x.id, table: x.table_no, staff: x.staff, time: x.time, total: Number(x.total), items: x.items || [], kind: 'settlement', round: x.round, serviceDate: x.service_date, stage: x.stage || 'ปิดยอด' }));
+                    db.bills = [...phase1Bills, ...phase2Bills].sort((a, b) => new Date(a.time) - new Date(b.time));
+                    db.tables = structuredClone(initial.tables);
+                    for (const t of db.tables) {
+                        const orders = phase1Bills.filter(b => Number(b.table) === Number(t.id)).sort((a, b) => new Date(b.time) - new Date(a.time));
+                        const settlements = phase2Bills.filter(b => Number(b.table) === Number(t.id)).sort((a, b) => new Date(b.time) - new Date(a.time));
+                        const latestOrder = orders[0];
+                        const latestSettlement = settlements[0];
+                        if (latestOrder && (!latestSettlement || new Date(latestOrder.time) > new Date(latestSettlement.time))) {
+                            t.state = 'busy';
+                            t.order = structuredClone(latestOrder.items || []);
+                            t.started = latestOrder.time;
+                        }
+                    }
+                    if (l.data?.length) {
+                        db.logs = l.data.map(x => ({ user: x.user_name, action: x.action, time: x.time }));
+                    }
+                    syncedLogCount = db.logs.length;
+                    const stateRow = (c.data || []).find(x => x.closure_key === STATE_KEY);
+                    if (stateRow) { const s = rowToState(stateRow); if (!s.serviceDate || s.serviceDate >= serviceDay()) { db.systemOpen = s.open; db.round = s.round; db.roundAuto = s.auto; db.serviceDate = s.serviceDate || db.serviceDate } }
+                    c.data = (c.data || []).filter(x => x.closure_key !== STATE_KEY);
+                    if (c.data?.length) {
+                        db.roundClosures = c.data.map(x => ({ serviceDate: x.service_date, round: x.round_no, closedAt: x.closed_at, staff: x.staff, total: Number(x.total), billCount: Number(x.bill_count) }));
+                    }
+                    localStorage.setItem('hippieCampPOSv2', JSON.stringify(db));
+                    return true;
+                } catch (err) {
+                    console.error('Supabase load failed', err);
+                    toast('โหลดข้อมูล Supabase ไม่สำเร็จ · ใช้ข้อมูลสำรองในเครื่อง');
+                    return false;
+                }
+            };
+
+            const STATE_KEY = '__system_state__';
+            const applyState = s => { let changed = db.systemOpen !== s.open || db.round !== s.round || db.serviceDate !== s.serviceDate || db.roundAuto !== s.auto; db.systemOpen = s.open; db.round = s.round; db.roundAuto = s.auto; db.serviceDate = s.serviceDate; if (changed) localStorage.setItem('hippieCampPOSv2', JSON.stringify(db)); return changed };
+            const rowToState = x => ({ open: Number(x.bill_count) === 1, round: Number(x.round_no) === 2 ? 2 : 1, auto: Number(x.total) !== 1, serviceDate: x.service_date, at: x.closed_at });
+            const pushState = async () => {
+                if (!SUPABASE_READY || !sb) return;
+                try { const r = await sb.from('daily_sales_summary_data_store').upsert([{ closure_key: STATE_KEY, service_date: db.serviceDate, round_no: db.round === 2 ? 2 : 1, closed_at: new Date().toISOString(), staff: user?.name || 'system', total: db.roundAuto === false ? 1 : 0, bill_count: db.systemOpen ? 1 : 0 }], { onConflict: 'closure_key' }); if (r.error) throw r.error } catch (e) { console.error('push state failed', e); toast('บันทึกสถานะระบบไม่สำเร็จ') }
+            };
+            const pullState = async () => {
+                if (!SUPABASE_READY || !sb) return false;
+                try {
+                    const r = await sb.from('daily_sales_summary_data_store').select('*').eq('closure_key', STATE_KEY).maybeSingle();
+                    if (r.error || !r.data) return false;
+                    const s = rowToState(r.data);
+                    if (s.serviceDate && s.serviceDate < serviceDay()) return false;
+                    return applyState(s);
+                } catch (e) { return false }
+            };
+            window.addEventListener('storage', e => { if (e.key !== 'hippieCampPOSv2' || !e.newValue || SUPABASE_READY) return; try { const n = JSON.parse(e.newValue); if (applyState({ open: n.systemOpen !== false, round: n.round === 2 ? 2 : 1, auto: n.roundAuto !== false, serviceDate: n.serviceDate || db.serviceDate })) { if (user) render() } } catch { } });
+
+            const byTable = id => db.tables.find(t => t.id === Number(id)),
+                tableSum = t => (t?.order || []).reduce((s, x) => s + x.price * x.qty, 0),
+                staffMode = () => user?.role === 'staff',
+                currentRound = () => db.round === 2 ? 2 : 1,
+                roundLabel = () => currentRound() === 1 ? 'รอบ 1 · 17:00–00:00' : 'รอบ 2 · 00:00–ปิดระบบ',
+                settlementBills = () => db.bills.filter(b => b.kind === 'settlement' || (!b.kind && b.stage === 'ปิดยอด'));
+
+            function toast(s) { let e = document.createElement('div'); e.className = 'toast'; e.textContent = s; document.body.append(e); setTimeout(() => e.remove(), 2700) }
+            function navPage(p) { page = p; render() }
+
+            function loginView() {
+                return `<div class="login"><section class="hero"><div class="brand"><div class="logo">✦</div><div><h1>HIPPIE CAMP</h1><small>LOUNGE • FOOD • GOOD VIBES</small></div></div><div class="hero-foot">HIPPIE CAMP · GOOD TIMES, GOOD COMPANY</div></section><section class="login-side"><div class="login-card"><div class="eyebrow">ยินดีต้อนรับกลับ</div><h3>เข้าสู่ระบบ</h3><p>เลือกบทบาทและกรอกข้อมูลเพื่อเริ่มใช้งาน</p><div class="role-switch"><button class="${rolePick === 'staff' ? 'active' : ''}" data-role="staff">♙ พนักงาน</button><button class="${rolePick === 'owner' ? 'active' : ''}" data-role="owner">♕ ผู้จัดการ</button></div><form id="loginForm"><div class="field"><label>ชื่อผู้ใช้งาน</label><input class="input full" name="username" autocomplete="username" placeholder="กรอกชื่อผู้ใช้งาน" required></div><div class="field"><label>รหัสผ่าน</label><input class="input full" name="password" type="password" autocomplete="current-password" placeholder="กรอกรหัสผ่าน" required></div><button class="btn full" style="margin-top:8px">เข้าสู่ระบบ　→</button></form><div class="login-hint">บัญชีทดลอง: พนักงาน <b>staff / 1234</b><br>ผู้จัดการ <b>manager / 1234</b></div></div></section></div>`
+            }
+
+            const menus = { owner: [['ภาพรวม', 'dashboard', '◈'], ['ขาย / จัดการโต๊ะ', 'pos', '▦'], ['บิลและประวัติ', 'bills', '▤'], ['สต็อกสินค้า', 'stock', '▧'], ['รายงานยอดขาย', 'reports', '▥'], ['พนักงานและสิทธิ์', 'users', '♙']], staff: [['เลือกโต๊ะ / ขาย', 'pos', '▦'], ['บิลและประวัติ', 'bills', '▤']] };
+
+            function shell(content) {
+                let list = menus[user.role] || menus.staff;
+                return `<header class="top"><div class="brand"><div class="logo">✦</div><div><h1>HIPPIE CAMP</h1><small>LOUNGE POS</small></div></div><div class="topright"><span class="live">● ระบบพร้อมใช้งาน</span><div class="userpill"><div class="avatar">${esc(user.name[0])}</div><div>${esc(user.name)}<small>${user.role === 'owner' ? 'ผู้จัดการ' : 'พนักงาน'}</small></div></div><button class="logout" id="logout">ออกจากระบบ</button></div></header><div class="layout"><aside class="side"><div class="side-label">${user.role === 'owner' ? 'MANAGEMENT' : 'SERVICE'}</div>${list.map(([t, p, i]) => `<button class="nav ${page === p ? 'active' : ''}" data-page="${p}"><span class="ico">${i}</span><span>${t}</span></button>`).join('')}<div class="side-foot">HIPPIE CAMP<br>ระบบจัดการหน้าร้าน<br>บันทึกข้อมูลบน Supabase</div></aside><main class="main">${content}</main><div class="mobile-nav">${list.map(([t, p, i]) => `<button class="nav ${page === p ? 'active' : ''}" data-page="${p}"><span class="ico">${i}</span><span>${t.split(' / ')[0]}</span></button>`).join('')}</div></div>`
+            }
+            function heading(k, title, desc, act = '') { return `<div class="heading"><div><div class="eyebrow">${k}</div><h2>${title}</h2><p>${desc}</p></div>${act}</div>` }
+            function stat(label, val, hint, icon) { return `<div class="card"><div class="metric"><span>${label}</span><span class="mi">${icon}</span></div><div class="value">${val}</div><div class="hint">${hint}</div></div>` }
+            const billDay = b => b.serviceDate || serviceDay(new Date(b.time));
+            function todayBills() { let d = serviceDay(); return settlementBills().filter(b => billDay(b) === d) }
+
+            function dashboard() {
+                let bs = todayBills(), sales = bs.reduce((s, b) => s + b.total, 0), orders = db.tables.filter(t => t.state !== 'free').length, items = db.products.reduce((s, p) => s + p.stock, 0), low = db.products.filter(p => p.stock <= p.low);
+                let days = Array.from({ length: 7 }, (_, i) => { let d = new Date(); d.setDate(d.getDate() - (6 - i)); let sum = settlementBills().filter(b => billDay(b) === serviceDay(new Date(d.getFullYear(), d.getMonth(), d.getDate(), 18))).reduce((s, b) => s + b.total, 0); return { day: d.toLocaleDateString('th-TH', { weekday: 'short' }), sum } }), max = Math.max(...days.map(x => x.sum), 1);
+                return `${heading('DASHBOARD', 'สวัสดี, ' + esc(user.name) + ' 👋', 'ภาพรวมความเคลื่อนไหวของร้าน · ' + today(), `<button class="btn" data-page="pos">＋ เปิดโต๊ะขาย</button>`)}<div class="cards">${stat('ยอดขายวันนี้', money(sales), `รอบ 1 ${money(bs.filter(b => Number(b.round) === 1).reduce((s, b) => s + b.total, 0))} · รอบ 2 ${money(bs.filter(b => Number(b.round) === 2).reduce((s, b) => s + b.total, 0))}`, '฿')}${stat('โต๊ะที่กำลังใช้งาน', `${orders} / ${db.tables.length}`, `${db.tables.filter(t => t.state === 'bill').length} โต๊ะรอชำระ`, '▦')}${stat('จำนวนสินค้าในสต็อก', items.toLocaleString('th-TH'), 'รวมสินค้าทุกหมวด', '▧')}${stat('สินค้าใกล้หมด', low.length, low.length ? low.map(p => p.name).slice(0, 2).join(' · ') : 'สต็อกสินค้าเพียงพอ', '⚠')}</div><div class="grid2"><section class="box"><div class="boxhead"><h3>ยอดขาย 7 วันที่ผ่านมา</h3><button class="btn secondary small" data-page="reports">ดูรายงาน</button></div>${days.map(d => `<div class="barrow"><span>${d.day}</span><div class="barbg"><div class="bar" style="width:${d.sum / max * 100}%"></div></div><b>${d.sum ? money(d.sum) : '—'}</b></div>`).join('')}</section><section class="box"><div class="boxhead"><h3>โต๊ะในร้าน</h3><button class="btn secondary small" data-page="pos">จัดการโต๊ะ</button></div><div class="row" style="gap:17px;flex-wrap:wrap;font-size:11px"><span><i class="green">●</i> ว่าง ${db.tables.filter(t => t.state === 'free').length}</span><span style="color:var(--gold2)">● กำลังใช้ ${db.tables.filter(t => t.state === 'busy').length}</span><span class="red">● รอชำระ ${db.tables.filter(t => t.state === 'bill').length}</span></div><div style="height:15px"></div><div class="table-grid" style="grid-template-columns:repeat(4,1fr)">${db.tables.slice(0, 8).map(tableCard).join('')}</div></section></div><div class="grid2"><section class="box"><div class="boxhead"><h3>บิลล่าสุด</h3><button class="btn secondary small" data-page="bills">ดูทั้งหมด</button></div>${billTable(db.bills.slice().reverse().slice(0, 5))}</section><section class="box"><div class="boxhead"><h3>สต็อกที่ควรตรวจสอบ</h3><button class="btn secondary small" data-page="stock">จัดการสต็อก</button></div>${low.length ? low.map(p => `<div class="alert">${esc(p.emoji)}　<b>${esc(p.name)}</b><span class="red" style="float:right">เหลือ ${p.stock} ${esc(p.unit)}</span></div>`).join('') : '<div class="notice">สต็อกสินค้าพร้อมขายทั้งหมด ✓</div>'}</section></div>`
+            }
+
+            function tableCard(t) { return `<button class="table-card ${t.state === 'busy' ? 'busy' : t.state === 'bill' ? 'bill' : ''} ${tableId === t.id ? 'selected' : ''}" data-table="${t.id}"><div class="row between"><span class="table-no">${String(t.id).padStart(2, '0')}</span><span style="font-size:10px;color:var(--muted)">${t.area === 'โซนสวน' ? 'สวน' : 'แคมป์'}</span></div><div class="table-state">${t.state === 'free' ? '● ว่าง' : t.state === 'busy' ? '● กำลังใช้งาน' : '● รอชำระ'}</div>${t.state !== 'free' ? `<div class="table-amount">${money(tableSum(t))}</div>` : ''}</button>` }
+
+            function posView() {
+                let t = byTable(tableId), cats = ['ทั้งหมด', 'อาหาร', 'กับแกล้ม', 'เบียร์', 'เหล้า', 'เครื่องดื่ม'], products = db.products.filter(p => (category === 'ทั้งหมด' || p.cat === category) && (!query || p.name.toLowerCase().includes(query.toLowerCase())));
+                return `${heading('POINT OF SALE', 'รับออเดอร์', `${roundLabel()} · ${db.systemOpen ? 'ระบบเปิด' : 'ระบบปิดแล้ว'}`, (user?.role === 'owner' ? `<div class="pills" style="margin-right:8px"><button class="pill ${db.roundAuto !== false ? 'active' : ''}" data-set-round="auto">อัตโนมัติ</button><button class="pill ${db.roundAuto === false && currentRound() === 1 ? 'active' : ''}" data-set-round="1">รอบ 1</button><button class="pill ${db.roundAuto === false && currentRound() === 2 ? 'active' : ''}" data-set-round="2">รอบ 2</button></div><button class="btn ${db.systemOpen ? 'danger' : 'secondary'}" data-system-toggle>${db.systemOpen ? 'ปิดระบบ' : 'เปิดระบบ'}</button>` : ''))}${db.systemOpen ? '' : '<div class="alert" style="margin-bottom:14px"><b>🔒 ระบบปิดอยู่</b> — ไม่สามารถรับออเดอร์หรือส่งรายการได้ จนกว่าผู้จัดการจะเปิดระบบ (ยังรับชำระโต๊ะที่ค้างอยู่ได้)</div>'}<section class="box"><div class="boxhead"><h3>① เลือกโต๊ะ</h3><span class="muted">สวน 01–08　·　แคมป์ 09–16</span></div><div class="table-grid">${db.tables.map(tableCard).join('')}</div></section>${t ? `<div class="sell-layout"><section class="box"><div class="boxhead"><h3>② เมนู　·　โต๊ะ ${String(t.id).padStart(2, '0')}</h3><span class="badge ${t.state === 'bill' ? 'red' : t.state === 'busy' ? '' : 'green'}">${t.state === 'free' ? 'โต๊ะใหม่' : t.state === 'bill' ? 'รอชำระ' : 'เปิดโต๊ะแล้ว'}</span></div><input id="searchProduct" class="input full" placeholder="⌕　ค้นหาเมนู..." value="${esc(query)}" style="margin-bottom:12px"><div class="pills">${cats.map(c => `<button class="pill ${category === c ? 'active' : ''}" data-cat="${c}">${c}</button>`).join('')}</div><div style="height:12px"></div><div class="products">${products.map(p => `<button class="product" data-add="${p.id}" ${p.stock <= 0 || !db.systemOpen ? 'disabled' : ''}><div class="row between"><span class="pemoji">${esc(p.emoji)}</span><span class="badge ${p.stock <= p.low ? 'red' : 'green'}">คงเหลือ ${p.stock}</span></div><div class="pname">${esc(p.name)}</div><div class="pmeta">${esc(p.cat)} · ${esc(p.unit)}</div><div class="price">${money(p.price)} <span class="pmeta">/ ${esc(p.unit)}</span></div></button>`).join('') || '<div class="empty">ไม่พบเมนู</div>'}</div></section><section class="box cart"><div class="boxhead"><h3>③ รายการโต๊ะ ${String(t.id).padStart(2, '0')}</h3><span class="muted">${t.order.length} รายการ</span></div>${t.order.length ? t.order.map((x, i) => `<div class="cart-line"><div><b>${esc(x.name)}</b><div class="pmeta">${money(x.price)} × ${x.qty} ${esc(x.unit)}</div></div><div class="qty"><button data-qty="${i}" data-delta="-1">−</button><b>${x.qty}</b><button data-qty="${i}" data-delta="1">+</button></div></div>`).join('') : '<div class="empty">ยังไม่มีรายการ<br><span class="pmeta">แตะเมนูเพื่อเพิ่มลงโต๊ะ</span></div>'}<div style="height:10px"></div><div class="totalrow"><span>ยอดปัจจุบัน</span><b>${money(tableSum(t))}</b></div><div class="totalrow grand"><span>ยอดสุทธิ</span><span>${money(tableSum(t))}</span></div>${t.state === 'bill' ? `<button class="btn full" data-checkout="${t.id}">รับชำระและปิดบิล　→</button>` : `<button class="btn full" data-send="${t.id}" ${!t.order.length || !db.systemOpen ? 'disabled' : ''}>${t.state === 'free' ? 'เปิดโต๊ะและส่งออเดอร์' : 'ส่งรายการเพิ่ม'}　→</button>${t.state !== 'free' ? `<button class="btn secondary full" style="margin-top:9px" data-checkout="${t.id}">เรียกเก็บเงิน / ปิดโต๊ะ</button>` : ''}`}<div class="hint" style="margin-top:12px;line-height:1.7">ระบบตรวจสอบและตัดสต็อกเมื่อส่งรายการ จากนั้นบันทึกบิลรอบแรก · การสั่งเพิ่มจะตัดสต็อกต่อเนื่อง</div></section></div>` : `<div class="box notice">เลือกโต๊ะเพื่อเริ่มทำรายการ</div>`}`
+            }
+
+            function billTable(items) {
+                if (!items.length) return '<div class="empty">ยังไม่มีบิลในระบบ</div>';
+                return `<div style="overflow:auto"><table class="table"><thead><tr><th>เลขที่บิล</th><th>โต๊ะ</th><th>พนักงาน</th><th>รอบ</th><th>เวลา</th><th>ยอดสุทธิ</th><th>สถานะ</th></tr></thead><tbody>${items.map(b => `<tr><td><b>${esc(b.id)}</b></td><td>${String(b.table).padStart(2, '0')}</td><td>${esc(b.staff)}</td><td>รอบ ${b.round || '—'}</td><td>${new Date(b.time).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })}</td><td><b>${money(b.total)}</b></td><td><span class="badge ${b.kind === 'order' ? '' : 'green'}">${b.kind === 'order' ? 'สั่งแล้ว' : 'ชำระแล้ว'}</span></td></tr>`).join('')}</tbody></table></div>`
+            }
+
+            function billsView() { return `${heading('BILL HISTORY', 'บิลและประวัติ', 'บิลรอบแรกและรายการปิดยอดทั้งหมด · ' + db.bills.length + ' บิล')}<div class="cards">${stat('จำนวนบิลทั้งหมด', settlementBills().length, 'บิลที่ปิดยอดแล้ว', '▤')}${stat('ยอดขายสะสม', money(settlementBills().reduce((s, b) => s + b.total, 0)), 'จากบิลที่ชำระสำเร็จ', '฿')}${stat('โต๊ะกำลังเปิด', db.tables.filter(t => t.state === 'busy').length, 'ยังมีรายการสั่งเพิ่มได้', '▦')}${stat('รอชำระ', db.tables.filter(t => t.state === 'bill').length, 'โต๊ะที่เรียกเก็บเงินแล้ว', '◷')}</div><div class="box"><div class="boxhead"><h3>ประวัติการปิดบิล</h3><input id="billSearch" class="input" placeholder="ค้นหาเลขบิล / โต๊ะ" style="max-width:240px"></div><div id="billRows">${billTable(db.bills.slice().reverse())}</div></div><div class="box"><div class="boxhead"><h3>รายการที่กำลังเปิด</h3><button class="btn secondary small" data-page="pos">ไปหน้าขาย</button></div>${db.tables.some(t => t.state !== 'free') ? `<div class="table-grid">${db.tables.filter(t => t.state !== 'free').map(tableCard).join('')}</div>` : '<div class="notice">ไม่มีโต๊ะที่กำลังเปิดอยู่</div>'}</div>` }
+
+            function stockView() { let low = db.products.filter(p => p.stock <= p.low); return `${heading('INVENTORY', 'สต็อกสินค้า', 'ตรวจสอบจำนวนคงเหลือ รับสินค้าเข้า และติดตามการตัดสต็อก', `<button class="btn" id="addProduct">＋ เพิ่มสินค้า</button>`)}<div class="cards">${stat('จำนวนรายการสินค้า', db.products.length, 'ทุกหมวดสินค้า', '▧')}${stat('จำนวนคงเหลือรวม', db.products.reduce((s, p) => s + p.stock, 0), 'นับตามหน่วยของแต่ละรายการ', '▤')}${stat('สินค้าใกล้หมด', low.length, 'ถึงจุดแจ้งเตือนหรือต่ำกว่า', '⚠')}${stat('สต็อกถูกตัดอัตโนมัติ', 'เปิดใช้งาน', 'ทุกครั้งที่ส่งออเดอร์', '↘')}</div>${low.length ? `<div class="box"><div class="boxhead"><h3>⚠️ รายการที่ใกล้หมด</h3></div>${low.map(p => `<div class="alert">${esc(p.emoji)}　<b>${esc(p.name)}</b>　<span class="red">คงเหลือ ${p.stock} ${esc(p.unit)} · จุดเตือน ${p.low}</span></div>`).join('')}</div>` : ''}<div class="box"><div class="boxhead"><h3>คลังสินค้า</h3><input id="stockSearch" class="input" placeholder="ค้นหาสินค้า" style="max-width:220px"></div><div id="stockRows">${stockTable()}</div></div>` }
+
+            function stockTable() { return stockTableFiltered('') }
+            function stockTableFiltered(q) {
+                let rows = db.products.filter(p => !q || p.name.toLowerCase().includes(q));
+                return `<div style="overflow:auto"><table class="table"><thead><tr><th>สินค้า</th><th>หมวด</th><th>คงเหลือ</th><th>ราคา</th><th>สถานะ</th><th>รับเข้า</th></tr></thead><tbody>${rows.map(p => `<tr><td>${esc(p.emoji)}　<b>${esc(p.name)}</b></td><td>${esc(p.cat)}</td><td>${p.stock} ${esc(p.unit)}</td><td>${money(p.price)}</td><td><span class="badge ${p.stock <= p.low ? 'red' : 'green'}">${p.stock <= p.low ? 'ใกล้หมด' : 'ปกติ'}</span></td><td><button class="btn secondary small" data-restock="${p.id}">＋ รับเข้า</button></td></tr>`).join('')}</tbody></table></div>`
+            }
+
+            function reportsView() {
+                let bs = settlementBills(), total = bs.reduce((s, b) => s + b.total, 0), qty = {};
+                bs.forEach(b => b.items.forEach(i => qty[i.name] = (qty[i.name] || 0) + i.qty));
+                let best = Object.entries(qty).sort((a, b) => b[1] - a[1]).slice(0, 5);
+                return `${heading('SALES REPORT', 'รายงานยอดขาย', 'สรุปจากบิลปิดยอดและสต็อก · ${today()}', `<button class="btn secondary" id="exportCsv">↓ ดาวน์โหลด CSV</button>`)}<div class="cards">${stat('ยอดขายรวม', money(total), 'ทุกบิลที่ชำระแล้ว', '฿')}${stat('จำนวนบิล', bs.length, 'เฉลี่ย ' + money(bs.length ? total / bs.length : 0) + ' / บิล', '▤')}${stat('เมนูขายได้', Object.keys(qty).length, 'รายการเมนูที่มียอดขาย', '🍽')}${stat('สินค้าคงเหลือ', db.products.reduce((s, p) => s + p.stock, 0), 'ตรวจนับสต็อกปัจจุบัน', '▧')}</div><div class="box"><div class="boxhead"><h3>ประวัติการปิดรอบ</h3></div>${db.roundClosures.length ? `<div style="overflow:auto"><table class="table"><thead><tr><th>วันที่ร้าน</th><th>รอบ</th><th>ผู้ปิดระบบ</th><th>เวลาปิด</th><th>ยอดรอบ</th></tr></thead><tbody>${db.roundClosures.slice().reverse().map(x => `<tr><td>${esc(x.serviceDate)}</td><td>รอบ ${x.round}</td><td>${esc(x.staff)}</td><td>${new Date(x.closedAt).toLocaleString('th-TH')}</td><td><b>${money(x.total)}</b> · ${x.billCount} บิล</td></tr>`).join('')}</tbody></table></div>` : '<div class="notice">ยังไม่มีประวัติปิดรอบ</div>'}</div><div class="grid2"><section class="box"><div class="boxhead"><h3>ยอดขายรายวัน · 7 วันล่าสุด</h3></div>${(() => { let ds = Array.from({ length: 7 }, (_, i) => { let d = new Date(); d.setDate(d.getDate() - 6 + i); return { day: d.toLocaleDateString('th-TH', { day: 'numeric', month: 'short' }), sum: settlementBills().filter(b => billDay(b) === serviceDay(new Date(d.getFullYear(), d.getMonth(), d.getDate(), 18))).reduce((s, b) => s + b.total, 0) } }), m = Math.max(...ds.map(x => x.sum), 1); return ds.map(x => `<div class="barrow"><span>${x.day}</span><div class="barbg"><div class="bar" style="width:${x.sum / m * 100}%"></div></div><b>${money(x.sum)}</b></div>`).join('') })()}</section><section class="box"><div class="boxhead"><h3>เมนูขายดี</h3></div>${best.length ? best.map((x, i) => `<div class="row between" style="padding:12px 0;border-bottom:1px solid var(--line)"><span>${i + 1}.　${esc(x[0])}</span><b>${x[1]} รายการ</b></div>`).join('') : '<div class="empty">ยังไม่มีข้อมูลยอดขาย</div>'}</section></div><div class="box"><div class="boxhead"><h3>รายละเอียดบิลปิดยอด</h3></div>${billTable(bs.slice().reverse())}</div>`
+            }
+
+            function usersView() { return `${heading('TEAM & ACCESS', 'พนักงานและสิทธิ์', 'จัดการบัญชีผู้ใช้ บทบาท และสถานะการเข้าใช้งาน', `<button class="btn" id="addUser">＋ เพิ่มพนักงาน</button>`)}<div class="cards">${stat('บัญชีทั้งหมด', db.users.length, 'ผู้จัดการและพนักงาน', '♙')}${stat('บัญชีใช้งาน', db.users.filter(u => u.active).length, 'พร้อมเข้าสู่ระบบ', '✓')}${stat('พนักงาน', db.users.filter(u => u.role === 'staff').length, 'สิทธิ์หน้าขายและบิล', '▦')}${stat('ผู้จัดการ', db.users.filter(u => u.role === 'owner').length, 'สิทธิ์จัดการครบทุกส่วน', '♕')}</div><div class="box"><div class="boxhead"><h3>บัญชีผู้ใช้งาน</h3></div><div style="overflow:auto"><table class="table"><thead><tr><th>ชื่อ</th><th>ชื่อผู้ใช้งาน</th><th>บทบาท / สิทธิ์</th><th>สถานะ</th><th>จัดการ</th></tr></thead><tbody>${db.users.map((u, i) => `<tr><td><b>${esc(u.name)}</b></td><td>${esc(u.username)}</td><td><span class="badge ${u.role === 'owner' ? '' : 'green'}">${u.role === 'owner' ? 'ผู้จัดการ' : 'พนักงาน · ขาย / บิล'}</span></td><td><span class="badge ${u.active ? 'green' : 'red'}">${u.active ? 'ใช้งาน' : 'ระงับ'}</span></td><td>${u.username === 'manager' ? '—' : `<button class="btn secondary small" data-user-toggle="${i}">${u.active ? 'ระงับ' : 'เปิดใช้'}</button> <button class="btn danger small" data-user-delete="${i}">ลบ</button>`}</td></tr>`).join('')}</tbody></table></div><div class="hint" style="margin-top:13px">พนักงานเข้าถึงหน้าขายและประวัติบิลได้ · ผู้จัดการเข้าถึง Dashboard, รายงาน, สต็อก และจัดการบัญชี</div></div><div class="box"><div class="boxhead"><h3>ประวัติการเข้าใช้ระบบ</h3></div>${db.logs.length ? `<div style="overflow:auto"><table class="table"><thead><tr><th>ผู้ใช้งาน</th><th>เหตุการณ์</th><th>วันและเวลา</th></tr></thead><tbody>${db.logs.slice().reverse().slice(0, 12).map(l => `<tr><td>${esc(l.user)}</td><td>${esc(l.action)}</td><td>${new Date(l.time).toLocaleString('th-TH')}</td></tr>`).join('')}</tbody></table></div>` : '<div class="notice">ประวัติการเข้าใช้จะแสดงที่นี่</div>'}</div>` }
+
+            function render() {
+                if (db.serviceDate !== serviceDay()) { db.serviceDate = serviceDay(); db.systemOpen = true; db.round = autoRound(); db.roundAuto = true; save(); pushState() }
+                let root = $('#root');
+                if (!user) {
+                    root.innerHTML = loginView();
+                    document.querySelectorAll('[data-role]').forEach(b => b.onclick = () => { rolePick = b.dataset.role; render() });
+                    $('#loginForm').onsubmit = async e => {
+                        e.preventDefault();
+                        let f = new FormData(e.currentTarget), username = String(f.get('username')).trim().toLowerCase(), password = String(f.get('password')), hash = await passwordHash(password);
+                        let u = db.users.find(x => x.username === username && (x.password_hash ? x.password_hash === hash : x.password === password) && x.active);
+                        if (!u) { toast('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'); return }
+                        if (u.role !== rolePick) { toast('บัญชีนี้ไม่ได้รับสิทธิ์ตามบทบาทที่เลือก'); return }
+                        user = u;
+                        page = u.role === 'owner' ? 'dashboard' : 'pos';
+                        try { localStorage.setItem('hippieCampSession', JSON.stringify({ username: u.username, at: Date.now() })) } catch { }
+                        db.logs.push({ user: u.name, action: 'เข้าสู่ระบบ', time: new Date().toISOString() });
+                        save();
+                        render();
+                    };
+                    return
+                }
+                if (user.role === 'staff' && !['pos', 'bills'].includes(page)) page = 'pos';
+                let views = { dashboard, pos: posView, bills: billsView, stock: stockView, reports: reportsView, users: usersView };
+                root.innerHTML = shell(views[page]?.() || posView());
+                wire()
+            }
+
+            function wire() {
+                document.querySelectorAll('[data-page]').forEach(b => b.onclick = () => navPage(b.dataset.page));
+                document.querySelectorAll('[data-system-toggle]').forEach(b => b.onclick = () => {
+                    if (!db.systemOpen) { db.systemOpen = true; db.logs.push({ user: user.name, action: `เปิดระบบขาย รอบ ${currentRound()}`, time: new Date().toISOString() }); save(); pushState(); toast('เปิดระบบขายแล้ว · รอบ ' + currentRound()); render(); return }
+                    let active = db.tables.filter(t => t.state !== 'free');
+                    if (active.length) { toast('กรุณาปิดบิลโต๊ะที่ยังใช้งานก่อนปิดระบบ'); return }
+                    if (!confirm('ยืนยันปิดระบบขายสำหรับรอบ ' + currentRound() + ' ?')) return;
+                    let bills = settlementBills().filter(x => x.serviceDate === serviceDay() && x.round === currentRound());
+                    let summary = { serviceDate: serviceDay(), round: currentRound(), closedAt: new Date().toISOString(), staff: user.name, total: bills.reduce((a, x) => a + x.total, 0), billCount: bills.length };
+                    db.roundClosures.push(summary);
+                    db.systemOpen = false;
+                    db.logs.push({ user: user.name, action: `ปิดระบบรอบ ${currentRound()} ยอด ${money(summary.total)}`, time: new Date().toISOString() });
+                    save(); pushState(); toast('ปิดระบบแล้ว · บันทึกยอด ' + money(summary.total)); render()
+                });
+                document.querySelectorAll('[data-set-round]').forEach(b => b.onclick = () => {
+                    let v = b.dataset.setRound;
+                    if (v === 'auto') { db.roundAuto = true; db.round = autoRound(); db.logs.push({ user: user.name, action: `ตั้งรอบอัตโนมัติ (รอบ ${db.round})`, time: new Date().toISOString() }); save(); pushState(); toast('รอบเปลี่ยนอัตโนมัติตามเวลา · ตอนนี้รอบ ' + db.round); render(); return }
+                    let r = Number(v);
+                    if (r === currentRound() && db.roundAuto === false) return;
+                    if (r !== currentRound() && db.tables.some(t => t.state !== 'free') && !confirm('ยังมีโต๊ะที่เปิดอยู่ ต้องการเปลี่ยนเป็นรอบ ' + r + ' ใช่ไหม? บิลที่ปิดต่อจากนี้จะถูกนับเป็นรอบ ' + r)) return;
+                    db.round = r; db.roundAuto = false;
+                    db.logs.push({ user: user.name, action: `เปลี่ยนเป็นรอบ ${r} (กำหนดเอง)`, time: new Date().toISOString() });
+                    save(); pushState(); toast('ตั้งเป็นรอบ ' + r + ' แบบกำหนดเอง'); render()
+                });
+                $('#logout').onclick = () => {
+                    db.logs.push({ user: user.name, action: 'ออกจากระบบ', time: new Date().toISOString() });
+                    save(); user = null; tableId = null;
+                    try { localStorage.removeItem('hippieCampSession') } catch { }
+                    render()
+                };
+                document.querySelectorAll('[data-table]').forEach(b => b.onclick = () => { tableId = Number(b.dataset.table); if (page === 'dashboard') { page = 'pos' } render() });
+                document.querySelectorAll('[data-cat]').forEach(b => b.onclick = () => { category = b.dataset.cat; render() });
+                $('#searchProduct')?.addEventListener('input', e => { let pos = e.target.selectionStart; query = e.target.value; render(); let el = $('#searchProduct'); el.focus(); el.setSelectionRange(pos, pos) });
+                document.querySelectorAll('[data-add]').forEach(b => b.onclick = () => {
+                    if (!db.systemOpen) { toast('ระบบปิดแล้ว'); return }
+                    let p = db.products.find(x => x.id === b.dataset.add), t = byTable(tableId);
+                    if (!p || !t) return;
+                    if (p.stock < 1) { toast('สินค้าหมด'); return }
+                    let line = t.order.find(x => x.productId === p.id);
+                    if (line) line.qty++; else t.order.push({ productId: p.id, name: p.name, price: p.price, unit: p.unit, qty: 1 });
+                    if (t.state === 'free') t.started = new Date().toISOString();
+                    save(); render()
+                });
+                document.querySelectorAll('[data-qty]').forEach(b => b.onclick = () => {
+                    if (!db.systemOpen) { toast('ระบบปิดแล้ว'); return }
+                    let t = byTable(tableId), i = +b.dataset.qty, dx = +b.dataset.delta;
+                    if (dx < 0 && t.order[i].qty <= 1) t.order.splice(i, 1); else t.order[i].qty += dx;
+                    save(); render()
+                });
+                document.querySelectorAll('[data-send]').forEach(b => b.onclick = () => {
+                    if (!db.systemOpen) { toast('ระบบปิดแล้ว'); return }
+                    let t = byTable(b.dataset.send);
+                    for (const line of t.order) { let p = db.products.find(x => x.id === line.productId); if (!p || p.stock < line.qty) { toast('สต็อก ' + line.name + ' ไม่เพียงพอ'); return } }
+                    t.order.forEach(line => { let p = db.products.find(x => x.id === line.productId); p.stock -= line.qty });
+                    t.state = 'busy';
+                    let bill = { id: 'HC-' + new Date().toISOString().slice(2, 10).replaceAll('-', '') + '-' + String(db.bills.length + 1).padStart(3, '0'), table: t.id, staff: user.name, time: new Date().toISOString(), total: tableSum(t), items: structuredClone(t.order), kind: 'order', round: currentRound(), serviceDate: serviceDay(), stage: `รอบ ${currentRound()}` };
+                    db.bills.push(bill); save(); toast('ส่งออเดอร์แล้ว · ตัดสต็อกและบันทึกบิลรอบแรก'); render()
+                });
+                document.querySelectorAll('[data-checkout]').forEach(b => b.onclick = () => {
+                    let t = byTable(b.dataset.checkout);
+                    if (t.state === 'free' || !t.order.length) { toast('ไม่มีรายการสำหรับปิดบิล'); return }
+                    if (!confirm(`ยืนยันรับชำระ ${money(tableSum(t))} และปิดโต๊ะ ${String(t.id).padStart(2, '0')} ?`)) return;
+                    let bill = { id: 'HC-' + new Date().toISOString().slice(2, 10).replaceAll('-', '') + '-' + String(db.bills.length + 1).padStart(3, '0'), table: t.id, staff: user.name, time: new Date().toISOString(), total: tableSum(t), items: structuredClone(t.order), kind: 'settlement', round: currentRound(), serviceDate: serviceDay(), stage: 'ปิดยอด' };
+                    db.bills.push(bill);
+                    t.state = 'free'; t.order = []; t.started = null; tableId = null;
+                    save(); toast('ชำระเงินสำเร็จ · ปิดยอดและเคลียร์โต๊ะแล้ว'); render()
+                });
+                document.querySelectorAll('[data-restock]').forEach(b => b.onclick = () => {
+                    let p = db.products.find(x => x.id === b.dataset.restock), n = Number(prompt(`รับสินค้าเข้า ${p.name}\nจำนวน (${p.unit})`, ''));
+                    if (!Number.isFinite(n) || n <= 0) return;
+                    p.stock += n; save(); render(); toast('อัปเดตสต็อกสินค้าแล้ว')
+                });
+                $('#addProduct')?.addEventListener('click', () => {
+                    // ===== BUG-002 FIX: ป้องกันไม่ให้เพิ่มสินค้าเมื่อยังไม่ login =====
+                    if (!user) { toast('กรุณาเข้าสู่ระบบก่อน'); return }
+                    if (user.role !== 'owner') { toast('เฉพาะผู้จัดการเท่านั้นที่เพิ่มสินค้าได้'); return }
+                    let name = prompt('ชื่อสินค้า'); if (!name) return;
+                    let price = Number(prompt('ราคาขาย (บาท)', '100')), stock = Number(prompt('จำนวนเริ่มต้น', '0'));
+                    if (!Number.isFinite(price) || price < 0 || !Number.isFinite(stock) || stock < 0) { toast('กรุณากรอกจำนวนและราคาให้ถูกต้อง'); return }
+                    let cat = prompt('หมวด: อาหาร / กับแกล้ม / เบียร์ / เหล้า / เครื่องดื่ม', 'อาหาร') || 'อาหาร', unit = prompt('หน่วยขาย', 'รายการ') || 'รายการ';
+                    db.products.push({ id: uid(), name, cat, price, stock, unit, emoji: cat === 'เหล้า' ? '🥃' : cat === 'อาหาร' ? '🍽' : '🍹', low: 3 });
+                    save(); render(); toast('เพิ่มสินค้าแล้ว')
+                });
+                $('#addUser')?.addEventListener('click', () => {
+                    if (!user) { toast('กรุณาเข้าสู่ระบบก่อน'); return }
+                    if (user.role !== 'owner') { toast('เฉพาะผู้จัดการเท่านั้น'); return }
+                    let name = prompt('ชื่อพนักงาน'); if (!name) return;
+                    let username = String(prompt('ชื่อผู้ใช้ (ภาษาอังกฤษ a-z 0-9 _ . - เท่านั้น)', '') || '').trim().toLowerCase();
+                    if (!username) return;
+                    // ===== BUG-004 FIX: ตรวจสอบ username =====
+                    if (!isValidUsername(username)) { toast('ชื่อผู้ใช้ต้องเป็น a-z 0-9 _ . - ยาว 3-32 ตัว'); return }
+                    if (db.users.some(u => u.username === username)) { toast('มีชื่อผู้ใช้นี้แล้ว'); return }
+                    let password = prompt('กำหนดรหัสผ่าน', '1234'); if (!password) return;
+                    passwordHash(password).then(password_hash => {
+                        db.users.push({ name, username, password_hash, role: 'staff', active: true });
+                        save(); render(); toast('เพิ่มบัญชีพนักงานแล้ว')
+                    })
+                });
+                document.querySelectorAll('[data-user-toggle]').forEach(b => b.onclick = () => { let u = db.users[+b.dataset.userToggle]; u.active = !u.active; save(); render() });
+                document.querySelectorAll('[data-user-delete]').forEach(b => b.onclick = () => { let i = +b.dataset.userDelete; if (confirm(`ลบบัญชี ${db.users[i].name}?`)) { db.users.splice(i, 1); save(); render() } });
+                $('#billSearch')?.addEventListener('input', e => { let q = e.target.value.toLowerCase(); $('#billRows').innerHTML = billTable(db.bills.slice().reverse().filter(b => b.id.toLowerCase().includes(q) || String(b.table).includes(q) || b.staff.toLowerCase().includes(q))) });
+                $('#stockSearch')?.addEventListener('input', e => { let q = e.target.value.toLowerCase(); $('#stockRows').innerHTML = stockTableFiltered(q) });
+                $('#exportCsv')?.addEventListener('click', exportCsv)
+            }
+
+            function exportCsv() {
+                let rows = [['เลขที่บิล', 'โต๊ะ', 'พนักงาน', 'รอบ', 'วันที่เวลา', 'ยอดสุทธิ'], ...settlementBills().map(b => [b.id, b.table, b.staff, b.round || '', new Date(b.time).toLocaleString('th-TH'), b.total])],
+                    csv = '\ufeff' + rows.map(r => r.map(x => '"' + String(x).replaceAll('"', '""') + '"').join(',')).join('\r\n'),
+                    a = document.createElement('a');
+                a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+                a.download = 'hippie-camp-sales.csv'; a.click(); URL.revokeObjectURL(a.href)
+            }
+
+            async function boot() {
+                // 1) กู้ session จาก localStorage ก่อน (เร็วมาก)
+                try {
+                    const saved = JSON.parse(localStorage.getItem('hippieCampSession') || 'null');
+                    if (saved && saved.username) {
+                        const u = db.users.find(x => x.username === saved.username && x.active);
+                        if (u) { user = u; page = u.role === 'owner' ? 'dashboard' : 'pos' }
+                        else { localStorage.removeItem('hippieCampSession') }
+                    }
+                } catch { localStorage.removeItem('hippieCampSession') }
+
+                // 2) render ทันทีจากข้อมูลใน localStorage (ไม่แว็บ)
+                render();
+
+                // 3) โหลดจาก Supabase แล้ว render อีกครั้งถ้ามีการเปลี่ยนแปลง
+                const loaded = await loadFromSupabase();
+                const stateChanged = await pullState();
+
+                // ตรวจ session หลังโหลด Supabase (user อาจถูกลบ/ระงับ)
+                if (user && !db.users.find(x => x.username === user.username && x.active)) {
+                    user = null;
+                    try { localStorage.removeItem('hippieCampSession') } catch { }
+                } else if (user) {
+                    const fresh = db.users.find(x => x.username === user.username);
+                    if (fresh) user = fresh;
+                }
+
+                if (loaded || stateChanged) render();
+
+                // ===== BUG-001 FIX: toast "เชื่อมต่อ Supabase" แสดงเฉพาะตอน login แล้วเท่านั้น =====
+                if (SUPABASE_READY && user && !supabaseWelcomeShown) {
+                    supabaseWelcomeShown = true;
+                    toast('เชื่อมต่อ Supabase แล้ว');
+                }
+
+                setInterval(async () => {
+                    let ch = await pullState();
+                    if (db.roundAuto !== false && db.round !== autoRound()) {
+                        db.round = autoRound();
+                        db.logs.push({ user: 'ระบบ', action: `เปลี่ยนเป็นรอบ ${db.round} อัตโนมัติ`, time: new Date().toISOString() });
+                        save(); pushState(); ch = true;
+                    }
+                    if (ch && user) render();
+                }, 4000);
+            }
+            boot();
+        })();
+    </script>
+</body>
+
+</html>
